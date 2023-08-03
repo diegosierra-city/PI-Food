@@ -21,13 +21,26 @@ async function postRecipe(req, res) {
   //return res.status(403).json(req.query);
   try {
     // 1. INSERT a new Recipe
+    const [newRecipeconst, created] = await Recipe.findOrCreate({
+      where: { title: req.body.title },
+      defaults: {
+      image: req.body.image,
+      summary: req.body.summary,
+      healthScore: req.body.healthScore,
+      steps: req.body.steps,
+    }
+  });
+
+  if(!created)return res.status(403).send('A recipe with this name already exists');
+    /* 
+    //el error de duplicados lo genera la DB
     const newRecipe = await Recipe.create({
       title: req.body.title,
       image: req.body.image,
       summary: req.body.summary,
       healthScore: req.body.healthScore,
       steps: req.body.steps,
-    });
+    }); */
     
 //return res.status(206).json(newRecipe);
     //Asociar las Dietas a la Receta
