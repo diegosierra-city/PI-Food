@@ -5,6 +5,8 @@ const {getRecipeById} = require('../controllers/getRecipeById.js')
 const {getRecipeByName} = require('../controllers/getRecipeByName.js')
 const {postRecipe} = require('../controllers/postRecipe.js')
 const {getDiets} = require('../controllers/getDiets.js')
+const {postUser} = require('../controllers/postUser.js')
+const {postLogin} = require('../controllers/postUser.js')
 
 
 
@@ -20,5 +22,8 @@ router.post('/recipes', postRecipe);
 
 router.get('/diets', getDiets);
 
+router.post('/singup', postUser);
+
+router.post('/login', postLogin);
 
 module.exports = router;

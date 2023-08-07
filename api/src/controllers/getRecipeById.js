@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Recipe, Diet } = require("../db.js");
+const { Recipe, Diet, User } = require("../db.js");
 require('dotenv').config();
 const {
  API_URL,API_KEY
@@ -8,7 +8,6 @@ const {
 async function getRecipeById(req, res) {
  const { idRecipe } = req.params; 
  //return res.status(402).json(idRecipe);
- //// hago un split por "-"********
  try {
  const arrayIdRecipe = idRecipe.split("-"); 
  //console.log('z',arrayIdRecipe[1])
@@ -19,7 +18,14 @@ async function getRecipeById(req, res) {
 include: Diet //carga la relación con la tabla intermedia
 }); */
 recipeDB = await Recipe.findByPk(idRecipe,{
-  include: Diet
+  include: [
+    {
+      model: Diet,
+    },
+    {
+      model: User,
+    },
+  ],
 })
  }else{
   const response = await axios.get(

@@ -38,11 +38,6 @@ module.exports = (sequelize) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
-    /* diets: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    } */
-
-      
+         
   });
 };

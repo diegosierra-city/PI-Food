@@ -1,5 +1,5 @@
-const server = require('./src/app.js');
-const { connDB } = require('./src/db.js');
+const server = require('./app.js');
+const { connDB } = require('./db.js');
 require('dotenv').config();
 const {
   PORT

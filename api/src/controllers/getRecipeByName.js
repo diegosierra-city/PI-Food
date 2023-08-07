@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Recipe, Diet } = require("../db.js");
+const { Recipe, Diet, User } = require("../db.js");
 const { Op } = require("sequelize");
 require('dotenv').config();
 const {
@@ -18,11 +18,18 @@ async function getRecipeByName(req, res) {
    {[Op.iLike]: `%${name}%`}
   },
   attributes: ["id","title","image"],//filtramos
-  //include: Diet //carga la tabla intermedia
-}); 
+  include: [
+    {
+      model: Diet,
+    },
+    {
+      model: User,
+    },
+  ],
+});
  
   let response = await axios.get(
-   `${API_URL}/complexSearch?apiKey=${API_KEY}&number=100&query=${name}`
+   `${API_URL}/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true&query=${name}`
  );
  listAPI = response.data;
  
