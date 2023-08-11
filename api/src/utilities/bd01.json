@@ -1,4 +1,3 @@
-/* https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&diet&apiKey=c9234d80bf7d43debfc9a7bc159a6cec */
 {
  "results": [
    {

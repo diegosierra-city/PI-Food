@@ -35,7 +35,7 @@ async function getRecipeByName(req, res) {
  
  if(listDB.length===0 && listAPI.totalResults===0) return res.status(404).send(`No recipe with this name '${name}' was found`);
  
-  return res.status(200).json([listDB,listAPI]);
+  return res.status(200).json([...listDB,...listAPI.results]);
   
  } catch (error) {
    return res.status(500).json(error.message);

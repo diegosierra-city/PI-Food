@@ -1,25 +1,39 @@
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import {searchRecipes} from '../../redux/actions'
+
+
+
 export default function Search(props) {
+const dispatch = useDispatch();
 
- async function onSearch(id) {
+ async function onSearch() {
+  if(searchText===''){
+    alert("First enter a search");
+    return;
+  }
   try {
-    let response = await axios(`http://localhost:3001/rickandmorty/character/${id}`)
-
-    let data = response.data;
-    if (data.name && !characters.find((character) => character.id === data.id)) {
-      setCharacters([...characters, data]);
-    } else if(!data.name) {
-      alert("¡No hay personajes con este ID!");
-    }else{
-     alert("Ya esta este personaje");
-    }
-
+    await dispatch(searchRecipes(searchText))
   } catch (error) {
     console.log(error)
   }
    
   }
+
+
+  const [searchText, setSerachText] = useState(""); 
+
+  function handleChange(e){
+    setSerachText(e.target.value);
+  }
   
  return (
-  <h2>Search</h2>
+  <div>
+  <input type='search' value={searchText} name='id' onChange={handleChange} />
+  <button className="boton-principal" onClick={()=>{
+     onSearch()
+  }}>Search</button>
+</div>
  )
  }

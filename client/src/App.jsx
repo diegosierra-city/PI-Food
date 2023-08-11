@@ -15,39 +15,53 @@ import LandingPage from "./views/LandingPage/LandingPage";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux'
-
-/* import dotenv from 'dotenv'
-dotenv.config();
-const { URL_API } = process.env; */
+import {useDispatch, useSelector } from "react-redux"
+import { getAllRecipes,getAllDiets } from "./redux/actions";
 
 
 export default function App() {
-const [recipes, setRecipes] = useState([]);
+  const dispatch = useDispatch();
+  //let recipes = useSelector((state) => state.allRecipes);
+//console.log('z',recipes)
+//let recipes=[]
 //const dispatch = useDispatch()
 
   let {pathname} = useLocation();
 
-  const [start, setStart] = useState(false);
-  
+    
   const navigate = useNavigate();
 
   //al montar se valida el usuario
-  useEffect(() => {
-    !start? navigate('/') : navigate('/home')
-    //alert(start)
- }, [start]);
+  /* useEffect(() => {
+    !pagStart? navigate('/') : navigate('/home')
+     }, [pagStart]); */
+
+     useEffect(() => {
+      console.log('WW')
+        dispatch(getAllRecipes())
+          .catch(error => {
+            console.error('Error al obtener las recetas:', error);
+          });
+      
+    dispatch(getAllDiets())
+          .catch(error => {
+            console.error('Error al obtener las dietas:', error);
+          });
+    }, []);
+
 
   return (
-    <div className="App"> holllaaaa--
+    <div className="App">
   {pathname!='/' && <NavBar />}
       
 <Routes>
 <Route path="/" element={<LandingPage />} />
-<Route path="/home" element={<Home/>} />
+<Route path="/home" element={<Home />} />
 <Route path="/about" element={<About />} />
 <Route path="/detail/:id" element={<Detail />} />
 <Route path="/new-recipe" element={<FormRecipe />} />
+<Route path="/login" element={<Login action={`login`} />} />
+<Route path="/singup" element={<Login action={`singup`} />} />
 <Route path="*" element={<Error404 />} />
 </Routes>
     
