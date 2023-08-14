@@ -2,8 +2,10 @@ export const ADD_RECIPE = 'ADD_RECIPE'
 export const ALL_RECIPES = 'ALL_RECIPES'
 export const DETAIL_RECIPES = 'DETAIL_RECIPES'
 export const RESET_RECIPES = 'RESET_RECIPES'
+export const CLEAN_RECIPES = 'CLEAN_RECIPES'
 export const SEARCH_RECIPES = 'SEARCH_RECIPES'
-export const FILTER = 'FILTER'
+export const FILTER_DIETS = 'FILTER_DIETS'
+export const FILTER_ORIGIN = 'FILTER_ORIGIN'
 export const ORDER = 'ORDER'
 export const ALL_DIETS = 'ALL_DIETS'
 export const ADD_USER = 'ADD_USER'
@@ -38,6 +40,25 @@ return async (dispatch) => {
     payload: data,
  });
 
+ } catch (error) {
+   console.log(error)
+ }
+ 
+};
+};
+
+export const addRecipe = (recipe) => {
+ console.log('T',recipe)
+return async (dispatch) => {
+ try {
+  let response = await axios.post(`http://localhost:3001/recipes`,recipe)
+   let data = response.data
+   //console.log('data',data)
+   /* return dispatch({
+    type: 'ADD_RECIPE',
+    payload: data,
+ }); */
+return data
  } catch (error) {
    console.log(error)
  }
@@ -113,14 +134,25 @@ export const resetRecipes = () => {
    } 
    }
 
+export const cleanRecipes = () => {
+   return {
+      type: 'CLEAN_RECIPES'
+   } 
+   }   
+
    export const filterRecipesDiets = (diet) => {
       return {
-      type: FILTER,
+      type: FILTER_DIETS,
       payload: diet
       }
       }
 
-
+export const filterRecipesOrigin = (origin) => {
+      return {
+      type: FILTER_ORIGIN,
+      payload: origin
+      }
+      }
 /* export const addRecipe = (recipe) => {
  //console.log('T',recipe)
 return async (dispatch) => {

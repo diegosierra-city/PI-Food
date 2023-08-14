@@ -12,7 +12,7 @@ export default function Detail() {
 
  //const recipes = useSelector((state) => state.recipes)
  //const recipe = recipes.find(recipe => recipe.id === id) //search in Store
-let recipe = useSelector((state) => state.recipes)
+let recipe = useSelector((store) => store.recipes)
 
  useEffect(()=>{
    dispatch(detailRecipe(id))
@@ -21,11 +21,12 @@ let recipe = useSelector((state) => state.recipes)
 
  return (
   <div className={styles.detail}>
-{recipe[0]?.title? <div className={styles.cont}>
+    
+{recipe.length === 1 && recipe[0]?.title? <div className={styles.cont}>
  <div>
   
 <h2>{recipe[0].title} </h2> 
-<small>ID: {recipe[0].id}
+<small>ID: {recipe[0].id} 
 <br />Health Score: <strong>{recipe[0].healthScore}</strong></small>
 <img src={recipe[0].image} alt="" />
 

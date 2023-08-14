@@ -7,15 +7,17 @@ const { API_URL, API_KEY } = process.env;
 
 async function postRecipe(req, res) {
   // id, title, image, summary, healthScore, steps, diets
-  //return res.status(403).json(req.body);
+  const recipe = req.body;
+  //return res.status(202).json(req.body);
+
   if (
-    !req.body.user_id ||
-    !req.body.title ||
-    !req.body.image ||
-    !req.body.summary ||
-    !req.body.healthScore ||
-    !req.body.steps ||
-    !req.body.diets
+    !recipe.user_id ||
+    !recipe.title ||
+    !recipe.image ||
+    !recipe.summary ||
+    !recipe.healthScore ||
+    !recipe.steps ||
+    !recipe.diets
   ) return res.status(400).send("Missing data");
    
   
@@ -23,13 +25,13 @@ async function postRecipe(req, res) {
   try {
     // 1. INSERT a new Recipe
     const [newRecipe, created] = await Recipe.findOrCreate({
-      where: { title: req.body.title },
+      where: { title: recipe.title },
       defaults: {
-      image: req.body.image,
-      summary: req.body.summary,
-      healthScore: req.body.healthScore,
-      steps: req.body.steps,
-      UserId: req.body.user_id
+      image: recipe.image,
+      summary: recipe.summary,
+      healthScore: recipe.healthScore,
+      steps: recipe.steps,
+      UserId: recipe.user_id
     }
   });
 
@@ -37,18 +39,18 @@ async function postRecipe(req, res) {
     /* 
     //el error de duplicados lo genera la DB
     const newRecipe = await Recipe.create({
-      title: req.body.title,
-      image: req.body.image,
-      summary: req.body.summary,
-      healthScore: req.body.healthScore,
-      steps: req.body.steps,
+      title: recipe.title,
+      image: recipe.image,
+      summary: recipe.summary,
+      healthScore: recipe.healthScore,
+      steps: recipe.steps,
     }); */
     
 //return res.status(206).json(newRecipe);
     //Asociar las Dietas a la Receta
     //await newRecipe.addDiet(dietsInRecipe)
 //se registra en la tabla intermedia RecipeDiets
-req.body.diets.forEach(async (diet) => {
+recipe.diets.forEach(async (diet) => {
 // return res.status(206).json(diet); 
       await newRecipe.addDiet(diet);
     })

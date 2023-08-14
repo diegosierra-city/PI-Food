@@ -5,7 +5,6 @@ import styles from './NavBar.module.css';
 
 export default function  NavBar (){
 
-
 return(
  <div className={styles.header}>
 
@@ -17,7 +16,7 @@ return(
   
   <div className={`${styles.menu} ${styles.col}`}>
 <Link to="/home"><button className="boton-principal">Home</button></Link>    
-<Link to="/home"><button className="boton-principal">Aporta una Receta</button></Link>
+<Link to="/new-recipe"><button className="boton-principal">Share your recipe</button></Link>
 <Link to="/about"><button className="boton-principal">About</button></Link>
 
   </div>

@@ -19,9 +19,9 @@ const [slide, setSlide] = useState(0);
   return (
     
     <div className={styles.slideZone}>
-      <div className={`${styles.img01} ${slide >= 1 ? styles.deslizar : styles.normal}`}>
+      {/* <div className={`${styles.img01} ${slide >= 1 ? styles.deslizar : styles.normal}`}>
       <img src="../src/assets/landing/bg01.jpg" alt="" id="img01" />
-      </div>
+      </div> */}
 
       <div className={`${styles.img02} ${slide >= 2 ? styles.deslizar : styles.normal}`}>
        <img src="../src/assets/landing/bg02.jpg" alt=""/> 
@@ -35,9 +35,10 @@ const [slide, setSlide] = useState(0);
       <img src="../src/assets/landing/bg04.jpg" alt="" id="img04" />
       </div>
 
-      <div className={`${styles.img02} ${styles.normal}`}>
+      {/* <div className={`${styles.img02} ${styles.normal}`}>
       <img src="../src/assets/landing/bg01.jpg" alt="" id="img05" />
-      </div>
+      </div> */}
+
     </div>
 
   );

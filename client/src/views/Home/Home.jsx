@@ -3,21 +3,24 @@ import Cards from "../../components/Cards/Cards";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { useDispatch } from "react-redux";
-import { getAllRecipes,filterRecipesDiets } from "../../redux/actions";
+import { getAllRecipes,filterRecipesDiets, filterRecipesOrigin,getAllDiets,savePage,resetRecipes,cleanRecipes} from "../../redux/actions";
 import { useParams } from "react-router-dom";
-import { savePage } from "../../redux/actions";
 import Search from "../../components/Search/Search";
 
+
 export default function Home() {
-  let recipes = useSelector((state) => state.recipes);
+  let recipes = useSelector((store) => store.recipes);
+  const allRecipes = useSelector((store) => store.allRecipes);
   //console.log('Home',recipes)
-  let diets = useSelector((state) => state.diets);
+  let diets = useSelector((store) => store.diets);
   let nowPage = useSelector((store) => store.page);
   const dispatch = useDispatch();
   //let {recipes}=useParams()
 
   const [recipesPage, setRecipesPage] = useState([]);
   const [actualPage, setActualPage] = useState(1);
+  const [filterDiet, setFilterDiet] = useState('all')
+  const [filterOrigin, setFilterOrigin] = useState('all')
 
   let pageRecipes = [];
   const recipesPerPage = 9;
@@ -56,11 +59,48 @@ export default function Home() {
 
   function handleFilterDiet(event) {
     dispatch(filterRecipesDiets(event.target.value));
+    setFilterDiet(event.target.value)
+    setFilterOrigin('all')
+    setActualPage(1)
   }
 
-  function handleFilterOrigin(e) {}
+  function handleFilterDietCard(filtro) {
+    setActualPage(1)
+    dispatch(filterRecipesDiets(filtro));
+    setFilterDiet(filtro)
+    setFilterOrigin('all')
+    
+  }
 
-  function handleSearch() {}
+  function handleFilterOrigin(e) {
+    setActualPage(1) 
+   dispatch(filterRecipesOrigin(e.target.value));
+   setFilterOrigin(e.target.value)
+   setFilterDiet('all')
+  
+  }
+
+  useEffect(() => {
+    
+  
+   if(allRecipes?.length>0){
+    dispatch(resetRecipes())
+   }else{
+   dispatch(getAllRecipes())
+      .catch(error => {
+        console.error('Error al obtener las recetas:', error);
+      }); 
+   }   
+    
+  
+dispatch(getAllDiets())
+      .catch(error => {
+        console.error('Error al obtener las dietas:', error);
+      });
+
+     return () => dispatch(cleanRecipes())
+      
+}, []);
 
   //console.log('Homerecipes',recipes)
   return (
@@ -70,7 +110,7 @@ export default function Home() {
       </div>
 
       <div className={styles.filtros}>
-        <select onChange={handleFilterDiet}>
+        <select onChange={handleFilterDiet} value={filterDiet}>
           <option value="all">Filter by Diet</option>
           {diets?.map((diet, i) => (
             <option key={i} value={`${diet.name}`}>
@@ -80,8 +120,8 @@ export default function Home() {
           <option value="all">All Diets</option>
         </select>
 
-        <select onChange={handleFilterOrigin}>
-          <option value="">Filter by Origin</option>
+        <select onChange={handleFilterOrigin} value={filterOrigin}>
+          <option value="all">Filter by Origin</option>
           <option value="api">API</option>
           <option value="db">Data Base</option>
           <option value="all">All</option>
@@ -91,7 +131,7 @@ export default function Home() {
       </div>
 
       <div>
-        <Cards recipes={recipesPage} />
+        <Cards recipes={recipesPage} handleFilterDietCard={handleFilterDietCard} />
       </div>
 
       <div className={styles.pages}>
