@@ -2,38 +2,22 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styles from './NewRecipe.module.css'
 import FormRecipe from '../../components/FormRecipe/FormRecipe'
-
+import Login from '../../components/Login/Login'
+import {getCookie,deleteCookie,saveCookie} from '../../utilities/cookie'
 
 export default function NewRecipe(props) {
 
  const [session, setSession] = useState(false);
 
- const getCookie = (name) => {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [cookieName, cookieValue] = cookie.trim().split('=');
-    if (cookieName === name) {
-      return cookieValue;
-    }
-  }
-  return '';
-};
-
-const saveCookie = (name, value, days) => {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-  const expires = `expires=${date.toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/`;
-}
 
  useEffect(() => {
-  // Verifica si la cookie "user_id" existe
-  if (getCookie('user_id')) {
-    console.log('La cookie "user_id" existe.');
-    setSession(false);//true
+  // Verifica si la cookie "user" existe
+  if (getCookie('user')) {
+    console.log('La cookie "user" existe.');
+    setSession(true);//true
   } else {
-    console.log('La cookie "user_id" no existe.');
-    setSession(true);//false
+    console.log('La cookie "user" no existe.');
+    setSession(false);//false
   }
 }, []);
 
@@ -45,12 +29,15 @@ const saveCookie = (name, value, days) => {
 
 {session? <div className={styles.zona_formulario}>
  <div className={styles.formulario}>
- <FormRecipe/> 
+ <FormRecipe setSession={setSession}/> 
  </div>
  
 
 </div> : <div className={styles.zona_formulario}>
- formulario Registro usuario
+ <div className={styles.formulario}>
+ <Login setSession={setSession}/>
+ </div>
+
  </div>}
 
   </div>

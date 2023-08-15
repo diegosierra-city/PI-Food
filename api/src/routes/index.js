@@ -7,7 +7,7 @@ const {getAllRecipes} = require('../controllers/getAllRecipes.js')
 const {postRecipe} = require('../controllers/postRecipe.js')
 const {getDiets} = require('../controllers/getDiets.js')
 const {postUser} = require('../controllers/postUser.js')
-const {postLogin} = require('../controllers/postUser.js')
+
 
 
 
@@ -25,8 +25,6 @@ router.post('/recipes', postRecipe);
 
 router.get('/diets', getDiets);
 
-router.post('/singup', postUser);
-
-router.post('/login', postLogin);
+router.post('/user/:type', postUser);
 
 module.exports = router;

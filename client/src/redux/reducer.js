@@ -12,18 +12,21 @@ import {
   ADD_USER,
   LOGIN,
   PAGE,
+  FILTERS
 } from "./actions";
 
 const initialState = {
   recipes: [],
   allRecipes: [],
   diets: [],
-  user: {},
   page: 1,
+  filters: {filterDiet:'all',filterOrigin:'all',filterOrder:''}
 };
 
 export default function rootReducer(state = initialState, action) {
+
    switch (action.type) {
+
     case PAGE:
       return {
         ...state,
@@ -135,6 +138,48 @@ let newRecipes
         recipes: [...newRecipesO],
       };
 
+
+      case ORDER:
+      // Creamos una copia del array original
+      const objetosOrdenados = [...state.allRecipes];
+
+      // Utilizamos la función sort para ordenar la copia del array por la propiedad "name"
+      if (action.payload == "A") {
+        objetosOrdenados.sort((a, b) => {
+          if (a.title < b.title) {
+            return -1;
+          }
+          if (a.title > b.title) {
+            return 1;
+          }
+          return 0;
+        });
+      } else if (action.payload == "D") {
+        objetosOrdenados.sort((a, b) => {
+          if (a.title < b.title) {
+            return 1; // Devolvemos 1 en lugar de -1
+          }
+          if (a.title > b.title) {
+            return -1; // Devolvemos -1 en lugar de 1
+          }
+          return 0;
+        });
+      }else if (action.payload === "score") {
+        objetosOrdenados.sort((a, b) => b.healthScore - a.healthScore);
+      }
+
+      return {
+        ...state,
+        recipes: [...objetosOrdenados],
+      };
+
+case FILTERS:
+     // console.log('h',action.payload)
+      return {
+        ...state,
+        filters: {...action.payload}
+      };
+      
     /*   case ADD_FAV:
       console.log('h',action.payload)
       return {

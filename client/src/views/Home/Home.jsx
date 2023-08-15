@@ -3,7 +3,7 @@ import Cards from "../../components/Cards/Cards";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { useDispatch } from "react-redux";
-import { getAllRecipes,filterRecipesDiets, filterRecipesOrigin,getAllDiets,savePage,resetRecipes,cleanRecipes} from "../../redux/actions";
+import { getAllRecipes,filterRecipesDiets, filterRecipesOrigin,getAllDiets,savePage,resetRecipes,cleanRecipes,orderRecipes, saveFilters} from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import Search from "../../components/Search/Search";
 
@@ -11,6 +11,7 @@ import Search from "../../components/Search/Search";
 export default function Home() {
   let recipes = useSelector((store) => store.recipes);
   const allRecipes = useSelector((store) => store.allRecipes);
+  const allFilters = useSelector((store) => store.filters);
   //console.log('Home',recipes)
   let diets = useSelector((store) => store.diets);
   let nowPage = useSelector((store) => store.page);
@@ -19,8 +20,9 @@ export default function Home() {
 
   const [recipesPage, setRecipesPage] = useState([]);
   const [actualPage, setActualPage] = useState(1);
-  const [filterDiet, setFilterDiet] = useState('all')
-  const [filterOrigin, setFilterOrigin] = useState('all')
+  const [filterDiet, setFilterDiet] = useState(allFilters.filterDiet)
+  const [filterOrigin, setFilterOrigin] = useState(allFilters.filterOrigin)
+  const [filterOrder, setFilterOrder] = useState(allFilters.filterOrder)
 
   let pageRecipes = [];
   const recipesPerPage = 9;
@@ -62,14 +64,18 @@ export default function Home() {
     setFilterDiet(event.target.value)
     setFilterOrigin('all')
     setActualPage(1)
-  }
+    setFilterOrder('')
+    //
+    dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
+    }
 
   function handleFilterDietCard(filtro) {
     setActualPage(1)
     dispatch(filterRecipesDiets(filtro));
     setFilterDiet(filtro)
     setFilterOrigin('all')
-    
+    setFilterOrder('')
+    dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
   }
 
   function handleFilterOrigin(e) {
@@ -77,7 +83,17 @@ export default function Home() {
    dispatch(filterRecipesOrigin(e.target.value));
    setFilterOrigin(e.target.value)
    setFilterDiet('all')
-  
+   setFilterOrder('')
+   dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
+  }
+
+  function handleOrder(e) {
+  setActualPage(1) 
+   dispatch(orderRecipes(e.target.value));
+   setFilterOrder(e.target.value)
+   setFilterDiet('all')
+   setFilterOrigin('all')
+   dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
   }
 
   useEffect(() => {
@@ -125,6 +141,13 @@ dispatch(getAllDiets())
           <option value="api">API</option>
           <option value="db">Data Base</option>
           <option value="all">All</option>
+        </select>
+
+        <select onChange={handleOrder} value={filterOrder}>
+          <option value="">Order</option>
+          <option value="A">A-Z</option>
+          <option value="D">Z-A</option>
+          <option value="score">Health Score</option>
         </select>
 
         <Search />

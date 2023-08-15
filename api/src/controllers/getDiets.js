@@ -15,6 +15,11 @@ async function getDiets(req, res) {
  //return res.status(403).json(listDiets);
  // si esta vacía se carga la primera vez desde el API 
  if(listDiets.length===0){
+  ///initial values
+ listDiets=[ 'vegetarian']//,'vegan','gluten free'
+ listDiets.map(async (di)=>{
+ await Diet.create({name:di}) 
+ })
 let response = await axios.get(
    `${API_URL}/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
  );
@@ -27,7 +32,7 @@ let response = await axios.get(
     //listDiets.push(d)
     if(!listDiets.find(e=>e.name===d)){
      listDiets.push({name:d})
-     await Diet.create({name:d})
+     await Diet.create({name:d})// in DB
     }
    })
   }

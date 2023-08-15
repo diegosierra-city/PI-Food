@@ -11,6 +11,7 @@ export const ALL_DIETS = 'ALL_DIETS'
 export const ADD_USER = 'ADD_USER'
 export const LOGIN = 'LOGIN'
 export const PAGE = 'PAGE'
+export const FILTERS = 'FILTERS'
 
 import axios from 'axios'
 /* //cargo las variables de .env
@@ -19,6 +20,9 @@ dotenv.config();
 const {
  URL_API
 } = process.env; */
+
+
+
 
 
 export const savePage = (pag) => {
@@ -49,7 +53,7 @@ return async (dispatch) => {
 
 export const addRecipe = (recipe) => {
  console.log('T',recipe)
-return async (dispatch) => {
+return async () => {
  try {
   let response = await axios.post(`http://localhost:3001/recipes`,recipe)
    let data = response.data
@@ -58,7 +62,7 @@ return async (dispatch) => {
     type: 'ADD_RECIPE',
     payload: data,
  }); */
-return data
+return 'Recipe add ok'
  } catch (error) {
    console.log(error)
  }
@@ -108,6 +112,7 @@ return async (dispatch) => {
  
 };
 };
+
 export const detailRecipe = (id) => {
    //console.log('T',recipe)
   return async (dispatch) => {
@@ -126,6 +131,8 @@ export const detailRecipe = (id) => {
    
   }
   }
+
+
 
 
 export const resetRecipes = () => {
@@ -153,6 +160,36 @@ export const filterRecipesOrigin = (origin) => {
       payload: origin
       }
       }
+
+   export const orderRecipes = (type) => {
+      return {
+      type: ORDER,
+      payload: type
+      }
+      } 
+    export const saveFilters = (filters) => {
+      return {
+      type: ORDER,
+      payload: filters
+      }
+      }     
+
+      export const loginUser = (type,user) => {
+         //console.log('T',recipe)
+  return async () => {
+    try {
+      let response = await  axios.post(`http://localhost:3001/user/${type}`,user)
+      let data = response.data
+      //console.log('dataAction',data)
+      saveCookie = ('user', data, 8)//8horas
+   
+    } catch (error) {
+      console.log(error)
+    }
+    
+   }
+        }
+
 /* export const addRecipe = (recipe) => {
  //console.log('T',recipe)
 return async (dispatch) => {

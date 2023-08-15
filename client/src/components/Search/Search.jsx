@@ -1,39 +1,58 @@
 import { useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import {searchRecipes} from '../../redux/actions'
+import { searchRecipes, resetRecipes, savePage } from "../../redux/actions";
 
+export default function Search() {
+  const dispatch = useDispatch();
 
-
-export default function Search(props) {
-const dispatch = useDispatch();
-
- async function onSearch() {
-  if(searchText===''){
-    alert("First enter a search");
-    return;
-  }
-  try {
-    await dispatch(searchRecipes(searchText))
-  } catch (error) {
-    console.log(error)
-  }
-   
+  async function onSearch() {
+    if (searchText === "") {
+      alert("First enter a search");
+      return;
+    }
+    try {
+      await dispatch(searchRecipes(searchText));
+      dispatch(savePage(1))
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  const [searchText, setSerachText] = useState("");
 
-  const [searchText, setSerachText] = useState(""); 
-
-  function handleChange(e){
+  function handleChange(e) {
     setSerachText(e.target.value);
   }
-  
- return (
-  <div>
-  <input type='search' value={searchText} name='id' onChange={handleChange} />
-  <button className="boton-principal" onClick={()=>{
-     onSearch()
-  }}>Search</button>
-</div>
- )
- }
+
+  function handleResetRecipes() {
+    dispatch(resetRecipes());
+    dispatch(savePage(1))
+  }
+
+  return (
+    <div>
+      <input
+        type="search"
+        value={searchText}
+        name="id"
+        onChange={handleChange}
+      />
+      <button
+        className="boton-principal"
+        onClick={() => {
+          onSearch();
+        }}
+      >
+        Search
+      </button>{" "}
+      <button
+        className="boton-principal"
+        onClick={() => {
+          handleResetRecipes();
+        }}
+      >
+        View All Recipes
+      </button>
+    </div>
+  );
+}
