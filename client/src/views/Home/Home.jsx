@@ -3,10 +3,19 @@ import Cards from "../../components/Cards/Cards";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { useDispatch } from "react-redux";
-import { getAllRecipes,filterRecipesDiets, filterRecipesOrigin,getAllDiets,savePage,resetRecipes,cleanRecipes,orderRecipes, saveFilters} from "../../redux/actions";
+import {
+  getAllRecipes,
+  filterRecipesDiets,
+  filterRecipesOrigin,
+  getAllDiets,
+  savePage,
+  resetRecipes,
+  cleanRecipe,
+  orderRecipes,
+  saveFilters,
+} from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import Search from "../../components/Search/Search";
-
 
 export default function Home() {
   let recipes = useSelector((store) => store.recipes);
@@ -20,9 +29,9 @@ export default function Home() {
 
   const [recipesPage, setRecipesPage] = useState([]);
   const [actualPage, setActualPage] = useState(1);
-  const [filterDiet, setFilterDiet] = useState(allFilters.filterDiet)
-  const [filterOrigin, setFilterOrigin] = useState(allFilters.filterOrigin)
-  const [filterOrder, setFilterOrder] = useState(allFilters.filterOrder)
+  const [filterDiet, setFilterDiet] = useState("all");
+  const [filterOrigin, setFilterOrigin] = useState(allFilters.filterOrigin);
+  const [filterOrder, setFilterOrder] = useState("");
 
   let pageRecipes = [];
   const recipesPerPage = 9;
@@ -61,62 +70,53 @@ export default function Home() {
 
   function handleFilterDiet(event) {
     dispatch(filterRecipesDiets(event.target.value));
-    setFilterDiet(event.target.value)
-    setFilterOrigin('all')
-    setActualPage(1)
-    setFilterOrder('')
-    //
-    dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
-    }
+    setFilterDiet(event.target.value);
+    setFilterOrigin("all");
+    setActualPage(1);
+    setFilterOrder("");
+  }
 
   function handleFilterDietCard(filtro) {
-    setActualPage(1)
+    setActualPage(1);
     dispatch(filterRecipesDiets(filtro));
-    setFilterDiet(filtro)
-    setFilterOrigin('all')
-    setFilterOrder('')
-    dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
+    setFilterDiet(filtro);
+    setFilterOrigin("all");
+    setFilterOrder("");
   }
 
   function handleFilterOrigin(e) {
-    setActualPage(1) 
-   dispatch(filterRecipesOrigin(e.target.value));
-   setFilterOrigin(e.target.value)
-   setFilterDiet('all')
-   setFilterOrder('')
-   dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
+    setActualPage(1);
+    dispatch(filterRecipesOrigin(e.target.value));
+    setFilterOrigin(e.target.value);
+    setFilterDiet("all");
+    setFilterOrder("");
   }
 
   function handleOrder(e) {
-  setActualPage(1) 
-   dispatch(orderRecipes(e.target.value));
-   setFilterOrder(e.target.value)
-   setFilterDiet('all')
-   setFilterOrigin('all')
-   dispatch(saveFilters({filterDiet:filterDiet,filterOrigin:filterOrigin,filterOrder:filterOrder}))
+    setActualPage(1);
+    dispatch(orderRecipes(e.target.value));
+    setFilterOrder(e.target.value);
+    setFilterDiet("all");
+    setFilterOrigin("all");
   }
 
   useEffect(() => {
-    
-  
-   if(allRecipes?.length>0){
-    dispatch(resetRecipes())
-   }else{
-   dispatch(getAllRecipes())
-      .catch(error => {
-        console.error('Error al obtener las recetas:', error);
-      }); 
-   }   
-    
-  
-dispatch(getAllDiets())
-      .catch(error => {
-        console.error('Error al obtener las dietas:', error);
-      });
+    if(!allRecipes.length){
+    dispatch(getAllRecipes()).catch((error) => {
+      console.error(error);
+    });
 
-     return () => dispatch(cleanRecipes())
-      
-}, []);
+    dispatch(getAllDiets()).catch((error) => {
+      console.error(error);
+    });  
+    }
+    
+
+    
+  }, [allRecipes, dispatch]);
+
+
+  
 
   //console.log('Homerecipes',recipes)
   return (
@@ -154,7 +154,10 @@ dispatch(getAllDiets())
       </div>
 
       <div>
-        <Cards recipes={recipesPage} handleFilterDietCard={handleFilterDietCard} />
+        <Cards
+          recipes={recipesPage}
+          handleFilterDietCard={handleFilterDietCard}
+        />
       </div>
 
       <div className={styles.pages}>

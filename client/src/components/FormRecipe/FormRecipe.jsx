@@ -27,6 +27,12 @@ console.log('USERRR',user)
     if (inputs.healthScore === 0) {
       err.healthScore = "the health Score is missing";
     }
+    if (inputs.healthScore > 100) {
+      err.healthScore = "the Score must not be greater than 100";
+    }
+    if (inputs.healthScore < 1) {
+      err.healthScore = "the Score must not be less than 0";
+    }
     if (inputs.steps[0].step === "") {
       err.steps = "the steps is missing";
     }

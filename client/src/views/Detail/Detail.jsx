@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { detailRecipe,resetRecipes } from "../../redux/actions";
+import { detailRecipe,cleanRecipe } from "../../redux/actions";
 import styles from './Detail.module.css'
 
 export default function Detail() {
@@ -12,11 +12,11 @@ export default function Detail() {
 
  //const recipes = useSelector((state) => state.recipes)
  //const recipe = recipes.find(recipe => recipe.id === id) //search in Store
-let recipe = useSelector((store) => store.recipes)
+let recipe = useSelector((store) => store.recipe)
 
  useEffect(()=>{
    dispatch(detailRecipe(id))
-   return ()=>dispatch(resetRecipes())
+   return ()=>dispatch(cleanRecipe())
  },[dispatch, id])
 
  return (

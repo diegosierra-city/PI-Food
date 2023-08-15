@@ -2,7 +2,7 @@ export const ADD_RECIPE = 'ADD_RECIPE'
 export const ALL_RECIPES = 'ALL_RECIPES'
 export const DETAIL_RECIPES = 'DETAIL_RECIPES'
 export const RESET_RECIPES = 'RESET_RECIPES'
-export const CLEAN_RECIPES = 'CLEAN_RECIPES'
+export const CLEAN_RECIPE = 'CLEAN_RECIPE'
 export const SEARCH_RECIPES = 'SEARCH_RECIPES'
 export const FILTER_DIETS = 'FILTER_DIETS'
 export const FILTER_ORIGIN = 'FILTER_ORIGIN'
@@ -141,9 +141,9 @@ export const resetRecipes = () => {
    } 
    }
 
-export const cleanRecipes = () => {
+export const cleanRecipe = () => {
    return {
-      type: 'CLEAN_RECIPES'
+      type: 'CLEAN_RECIPE'
    } 
    }   
 

@@ -3,7 +3,7 @@ import {
   ALL_RECIPES,
   DETAIL_RECIPES,
   RESET_RECIPES,
-  CLEAN_RECIPES,
+  CLEAN_RECIPE,
   SEARCH_RECIPES,
   FILTER_DIETS,
   FILTER_ORIGIN,
@@ -18,6 +18,7 @@ import {
 const initialState = {
   recipes: [],
   allRecipes: [],
+  recipe:{},
   diets: [],
   page: 1,
   filters: {filterDiet:'all',filterOrigin:'all',filterOrder:''}
@@ -42,7 +43,7 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case SEARCH_RECIPES:
-      console.log("reducer-search", action.payload);
+      //console.log("reducer-search", action.payload);
       return {
         ...state,
         recipes: [...action.payload],
@@ -52,7 +53,7 @@ export default function rootReducer(state = initialState, action) {
       //console.log('reducer',action.payload)
       return {
         ...state,
-        recipes: [action.payload],
+        recipe: [action.payload],
       };
 
     case RESET_RECIPES:
@@ -62,11 +63,11 @@ export default function rootReducer(state = initialState, action) {
         recipes: [...state.allRecipes],
       };
 
-     case CLEAN_RECIPES:
+     case CLEAN_RECIPE:
       //console.log('reducer',action.payload)
       return {
         ...state,
-        recipes: [],
+        recipe: {},
       }; 
 
     case ALL_DIETS:
@@ -108,6 +109,7 @@ let newRecipes
       return {
         ...state,
         recipes: [...newRecipes],
+        filters: {...state.filters, filterDiet:action.payload}
       };
 
     case FILTER_ORIGIN:
@@ -136,6 +138,7 @@ let newRecipes
       return {
         ...state,
         recipes: [...newRecipesO],
+        filters: {...state.filters, filterOrigin:action.payload}
       };
 
 
@@ -171,14 +174,10 @@ let newRecipes
       return {
         ...state,
         recipes: [...objetosOrdenados],
+        filters: {...state.filters, filterOrder:action.payload}
       };
 
-case FILTERS:
-     // console.log('h',action.payload)
-      return {
-        ...state,
-        filters: {...action.payload}
-      };
+
       
     /*   case ADD_FAV:
       console.log('h',action.payload)
