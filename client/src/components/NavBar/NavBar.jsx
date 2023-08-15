@@ -17,7 +17,7 @@ return(
   <div className={`${styles.menu} ${styles.col}`}>
 <Link to="/home"><button className="boton-principal">Home</button></Link>    
 <Link to="/new-recipe"><button className="boton-principal">Share your recipe</button></Link>
-<Link to="/about"><button className="boton-principal">About</button></Link>
+{/* <Link to="/about"><button className="boton-principal">About</button></Link> */}
 
   </div>
 

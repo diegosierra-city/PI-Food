@@ -120,7 +120,7 @@ export default function Home() {
 
   //console.log('Homerecipes',recipes)
   return (
-    <div>
+    <div className="page">
       <div className="image-page">
         <img src="../src/assets/pages/Home.jpg" alt="" />
       </div>

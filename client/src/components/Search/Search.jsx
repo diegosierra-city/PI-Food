@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchRecipes, resetRecipes, savePage } from "../../redux/actions";
+import styles from "./Search.module.css";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -30,11 +31,11 @@ export default function Search() {
   }
 
   return (
-    <div>
+    <div className={styles.zona}>
       <input
         type="search"
         value={searchText}
-        name="id"
+        name="id" className="w-50"
         onChange={handleChange}
       />
       <button

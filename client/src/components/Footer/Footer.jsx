@@ -2,8 +2,8 @@ import styles from "./Footer.module.css";
 
 export default function Footer(props) {
  return (
-  <div className="footer">
-   <div className="footer-cont">
+  <div className={styles.footer}>
+   <div className={styles.footer_cont}>
     <div>
     <img src="../src/assets/logoCommunityCooks120.png" alt="" />
     </div>
@@ -12,6 +12,7 @@ export default function Footer(props) {
     <img src="../src/assets/logoSpoonacular.png" alt="" />
     </div>
    </div>
+    <div className="text-center"><small>Diego Sierra 2023</small></div>
     
   </div>
  )

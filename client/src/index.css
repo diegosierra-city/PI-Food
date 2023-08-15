@@ -19,12 +19,14 @@ html {
  scroll-behavior: smooth;
 }
 .App{padding:0px;}
-.image-page img{width: 100vw;}
+.image-page{ position: relative; width: 100vw; height: 15vw; overflow: hidden; border:solid 1px red}
+.image-page img{height: 100%; width: auto; min-width: 100vw;}
 
 h2{font-family: 'Square Peg', cursive; font-size:40px; margin:0; color: red; line-height: 1;}
 .text-white{color:white}
+.text-center{text-align: center;}
 .right{text-align: right; justify-content: right;}
-.boton-principal{ background-color: red; border:solid 1px black; border-radius: 8px; margin-left: 4px; margin-right: 4px; color:Gainsboro; padding: 4px 10px; cursor:pointer;  transition: 600ms all ease;}
+.boton-principal{ background-color: red; border:solid 1px black; border-radius: 8px; margin-left: 4px; margin-right: 4px; color:Gainsboro; padding: 4px 10px; cursor:pointer;  transition: 600ms all ease; white-space:nowrap;}
 .boton-principal:hover{background-color: black; color:red}
 input,select, textarea{background-color: black; color:white; border:solid 1px rgb(78, 78, 78); border-radius: 8px; margin-left: 4px; margin-right: 4px; padding: 8px 10px;  transition: 600ms all ease; font-size: 15px;}
 select optgroup{border:0}
@@ -65,13 +67,8 @@ input[type="checkbox"]:checked::before {
 
 a{text-decoration: none; color: yellow}
 
-.footer{background-color: rgba(255,255,255,0.8); position: relative; bottom: 0; left: 0; right: 0; margin-top:20px
-
-}
-.footer-cont{
- display: grid; grid-template-columns: 1fr 1fr; width: 80vw; margin: 0 auto; max-width: 800px; color:black
-}
-.footer-cont div{text-align: center;}
+.App{min-height: 100vh; position: relative; }
+.page{padding-bottom: 150px;}
 
 .danger{color:red; font-size: 12px;}
 .warning{border:solid 1px red}
@@ -80,3 +77,13 @@ a{text-decoration: none; color: yellow}
 .w-80{width: 80%;}
 .w-50{width: 50%;}
 .w-30{width: 30%;}
+
+@media screen and (max-width: 950px) {
+ .image-page{height: 25vw;}
+}
+@media screen and (max-width: 690px) {
+.image-page{height: 35vw;}
+.page{padding-bottom: 250px;}
+}
+
+

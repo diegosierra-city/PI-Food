@@ -16,11 +16,15 @@ let recipe = useSelector((store) => store.recipe)
 
  useEffect(()=>{
    dispatch(detailRecipe(id))
+   window.scrollTo({
+    top: 0,
+    behavior: "smooth", // Hace que el desplazamiento sea suave
+  });
    return ()=>dispatch(cleanRecipe())
  },[dispatch, id])
 
  return (
-  <div className={styles.detail}>
+  <div className={`${styles.detail} page`}>
     
 {recipe.length === 1 && recipe[0]?.title? <div className={styles.cont}>
  <div>

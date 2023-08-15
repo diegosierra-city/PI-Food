@@ -22,7 +22,7 @@ export default function NewRecipe(props) {
 }, []);
 
  return (
-  <div>
+  <div className="page">
    <div className="image-page">
         <img src="../src/assets/pages/NewRecipe.jpg" alt="" />
       </div>
