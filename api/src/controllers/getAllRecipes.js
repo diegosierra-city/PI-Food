@@ -23,16 +23,16 @@ recipesDB = await Recipe.findAll({
   ],
 })
 
-/*   const response = await axios.get(
+  const response = await axios.get(
    `${API_URL}/complexSearch?number=100&addRecipeInformation=true&apiKey=${API_KEY}`
  );
-recipesAPI = response.data.results; */
+recipesAPI = response.data.results;
+return res.status(200).json([...recipesDB,...recipesAPI]);
 
+/* recipesAPI = db.results
+return res.status(200).json([...recipesDB]);
+ */
 
-recipesAPI = db.results
-
-  //return res.status(200).json([...recipesDB]);
-  return res.status(200).json([...recipesDB,...recipesAPI]);
  } catch (error) {
    return res.status(404).json(error.message);
  }
