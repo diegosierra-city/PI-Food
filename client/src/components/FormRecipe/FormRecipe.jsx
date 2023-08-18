@@ -37,7 +37,7 @@ export default function FormRecipe({setSession}) {
       err.steps = "the steps is missing";
     }
     if (inputs.diets.length === 0) {
-      err.diets = "the diets is missing:" + inputs.diets.length;
+      err.diets = "the diets is missing:";
     }
     //setErrors({...errors,...err})
     //console.log("VErrores", err);
@@ -92,6 +92,7 @@ export default function FormRecipe({setSession}) {
       alert("You must fill in all fields");
       return;
     }
+    
     //alert("Datos completos");
 
     try {
@@ -123,7 +124,7 @@ export default function FormRecipe({setSession}) {
         diets: [],
       });
     } catch (error) {
-      alert("Error al agregar la receta:"+ error);
+      alert("Error:"+ error);
     }
   };
 
@@ -173,7 +174,7 @@ export default function FormRecipe({setSession}) {
   return (
     <div>
       <div className="right"><small>{user.name} - <a href="#" onClick={handlerClose}>salir</a></small></div>
-      <h2>Add Your Recipe</h2>
+      <h2>Share Your Recipe</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Title:</label>
         <br />

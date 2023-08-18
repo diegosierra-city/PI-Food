@@ -8,15 +8,13 @@ const {
 async function getRecipeById(req, res) {
  const { idRecipe } = req.params; 
  //return res.status(402).json(idRecipe);
+ //return res.status(402).json(`${API_URL}/${idRecipe}/information?apiKey=${API_KEY}`);
  try {
  const arrayIdRecipe = idRecipe.split("-"); 
  //console.log('z',arrayIdRecipe[1])
  let recipeDB
- if(arrayIdRecipe[1]){//typeof idRecipe==='NaN'
-/*  recipeDB = await Recipe.findOne({
-  where: {id: idRecipe},
-include: Diet //carga la relación con la tabla intermedia
-}); */
+ if(arrayIdRecipe[1]){
+
 recipeDB = await Recipe.findByPk(idRecipe,{
   include: [
     {

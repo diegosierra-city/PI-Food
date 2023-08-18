@@ -91,7 +91,7 @@ if (inputs.password.length < 6) {
        password2: "",
       });
     } catch (error) {
-   console.table(error)
+   //console.table(error)
     //console.log('error',error.response.data)
     if(error?.response?.data) alert(error.response.data);
     }

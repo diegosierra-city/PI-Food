@@ -14,14 +14,6 @@ export const PAGE = 'PAGE'
 export const FILTERS = 'FILTERS'
 
 import axios from 'axios'
-/* //cargo las variables de .env
-import dotenv from 'dotenv'
-dotenv.config();
-const {
- URL_API
-} = process.env; */
-
-
 
 
 
@@ -114,7 +106,7 @@ return async (dispatch) => {
 };
 
 export const detailRecipe = (id) => {
-   //console.log('T',recipe)
+   //console.log('Txx',id)
   return async (dispatch) => {
    try {
      let response = await  axios.get(`http://localhost:3001/recipes/${id}`)
@@ -190,71 +182,3 @@ export const filterRecipesOrigin = (origin) => {
    }
         }
 
-/* export const addRecipe = (recipe) => {
- //console.log('T',recipe)
-return async (dispatch) => {
- try {
-   let response = await  axios.post('http://localhost:3001/rickandmorty/fav', recipe)
-   let data = response.data
-   return dispatch({
-    type: 'ADD_FAV',
-    payload: data,
- });
-
- } catch (error) {
-   console.log 
- }
- 
-};
-}; */
-
-/*
-//solo redux
-export const removeFav = (id) => {
-return {
-type: REMOVE_FAV,
-payload: id
-}
-} */
-
-/* /// redux y express
-export const removeFav = (id) => {
- return async (dispatch) => {
-    try {
-       let response = await axios.delete(`http://localhost:3001/rickandmorty/fav/${id}`)
-       let data = response.data
-       return dispatch({
-          type: 'REMOVE_FAV',
-          payload: id,
-    });
-    }catch (error) {
-       console.log(error)
-    }
-   
- };
-
-
-};
-
-/// redux y express
-export const allFav = () => {
-return (dispatch) => {
-  axios.get(`http://localhost:3001/rickandmorty/fav`).then(({ data }) => {
-     return dispatch({
-        type: 'ALL_FAV',
-        payload: data,
-  });
-  });
-};
-};
-
-
-
-
-export const order = (sentido) => {
-return {
-type: ORDER,
-payload: sentido
-}
-}
- */
