@@ -36,7 +36,7 @@ export const getAllRecipes = () => {
  //console.log('T',recipe)
 return async (dispatch) => {
  try {
-   let response = await  axios.get('http://localhost:3001/recipes-all')
+   let response = await  axios.get('http://localhost:3001/recipes')
    let data = response.data
    //console.log('data',data)
    return dispatch({
@@ -52,7 +52,7 @@ return async (dispatch) => {
 };
 
 export const addRecipe = (recipe) => {
- console.log('T',recipe)
+ //console.log('T',recipe)
 return async () => {
  try {
   let response = await axios.post(`http://localhost:3001/recipes`,recipe)
@@ -100,7 +100,7 @@ return async (dispatch) => {
       }
     })
    let data = response.data
-   console.log('action data search',data)
+   //console.log('action data search',data)
    return dispatch({
     type: 'SEARCH_RECIPES',
     payload: data,
